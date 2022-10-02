@@ -20,6 +20,9 @@ public class Ship : MonoBehaviour
     //VARIABLE PARA DETENER LA NAVES SI NO PRESIONAMOS EL ACELERADOR
     public float brake;
 
+    //VATIABLE PARA QUE LA NAVE GIRE
+    public float angularSpeed;
+
     void Start()
     {
         //LE INDICAMOS QUE SELECCIONA EL RIGIDBODY DEL GAMEOBJECT
@@ -39,6 +42,8 @@ public class Ship : MonoBehaviour
         vertical = ShipManager.Vertical;
         horizontal = ShipManager.Horizontal;
         shooting = ShipManager.Fire;
+
+        Rotate();
     }
 
     //FIXED UPDATE NOS PERMITE DESPLAZAR UN OBJETO EN UN INTERVALO FIJO
@@ -58,5 +63,18 @@ public class Ship : MonoBehaviour
             shipBody.velocity = shipBody.velocity.normalized * maxSpeed;
 
         }
+    }
+
+    //METODO PARA ROTAR LA NAVE
+    private void Rotate()
+    {
+        //SI NOS DESPLAZAMOS DE IZQUIERDA A DERECHA NO PODREMOS ROTAR
+        if (horizontal == 0)
+        {
+            return;
+        }
+        //PERO SIN NOS MOVEMOS DE ABAJO HACIA ARRIBA ROTAREMOS SEGUN SEA EL VALOR DE angularSpeed
+        transform.Rotate(0, 0, -angularSpeed * horizontal * Time.deltaTime);
+
     }
 }

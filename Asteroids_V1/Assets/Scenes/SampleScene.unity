@@ -1000,7 +1000,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   maxSpeed: 40
-  brake: 5
+  brake: 2
+  angularSpeed: 150
 --- !u!1 &880168159
 GameObject:
   m_ObjectHideFlags: 0
