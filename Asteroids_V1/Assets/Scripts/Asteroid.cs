@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Asteroid : MonoBehaviour
 {
+    public TMP_Text score;
+
+    public int points = 0;
+
     private Rigidbody2D body;
 
     public float speed;
@@ -43,8 +49,15 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
+            Score();
             Destroy(gameObject);
             Destroy(collision.gameObject);
+            score.text = points.ToString();
         }
+    }
+
+    public void Score()
+    {
+        points++;
     }
 }
