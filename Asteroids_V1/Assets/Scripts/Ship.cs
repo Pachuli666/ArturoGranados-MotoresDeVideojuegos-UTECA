@@ -23,6 +23,16 @@ public class Ship : MonoBehaviour
     //VATIABLE PARA QUE LA NAVE GIRE
     public float angularSpeed;
 
+    //BULLETS
+
+    public float bulletPosition;
+
+    public GameObject bulletPrefab;
+
+    private bool CanShoot = true ;
+
+    private float ShootTime = 0.35f;
+
     void Start()
     {
         //LE INDICAMOS QUE SELECCIONA EL RIGIDBODY DEL GAMEOBJECT
@@ -44,6 +54,7 @@ public class Ship : MonoBehaviour
         shooting = ShipManager.Fire;
 
         Rotate();
+        Shoot();
     }
 
     //FIXED UPDATE NOS PERMITE DESPLAZAR UN OBJETO EN UN INTERVALO FIJO
@@ -75,6 +86,41 @@ public class Ship : MonoBehaviour
         }
         //PERO SIN NOS MOVEMOS DE ABAJO HACIA ARRIBA ROTAREMOS SEGUN SEA EL VALOR DE angularSpeed
         transform.Rotate(0, 0, -angularSpeed * horizontal * Time.deltaTime);
+
+    }
+
+    //METODO DISPARO
+
+    private void Shoot()
+    {
+        if (shooting && CanShoot)
+        {
+            StartCoroutine(FireRate());
+            {
+
+            }
+
+        }
+    }
+    
+    private IEnumerator FireRate()
+    {
+        CanShoot = false;
+
+        //SE ASIGNA UN EJE DE MOVIMIENTO Y POSICION INICIAL DE LA BALA
+        var pos = transform.up * bulletPosition + transform.position;
+
+        //SE INSTANCIA EL PREFAB DE LA BALA CON LOS VALORES DE LA ANTERIOR LINEA
+        var bullet = Instantiate(bulletPrefab, pos, transform.rotation);
+
+        //SE DESTRUYE DESPUES DE 5 SEGUNDOS
+        Destroy(bullet, 5);
+                
+            yield return new WaitForSeconds (ShootTime);
+
+        CanShoot = true;
+
+
 
     }
 }
