@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
+    //SINGLETON
+    public static Ship door;
+
     private Rigidbody2D shipBody;
 
     private float vertical;
@@ -29,9 +32,19 @@ public class Ship : MonoBehaviour
 
     public GameObject bulletPrefab;
 
-    private bool CanShoot = true ;
+    public bool CanShoot = false;
 
     private float ShootTime = 0.35f;
+
+    private void Awake()
+    {
+        if(door != null)
+        {
+            return;
+        }
+
+        door = this;
+    }
 
     void Start()
     {
@@ -119,8 +132,6 @@ public class Ship : MonoBehaviour
             yield return new WaitForSeconds (ShootTime);
 
         CanShoot = true;
-
-
 
     }
 }
