@@ -19,6 +19,8 @@ public class Asteroid : MonoBehaviour
     //ESTA VARIABLE CONTROLA CUANTOS ASTEROIDES SE GENERARAN
     public int HowManyAsteroids;
 
+    //BOOL PARA DESTUIR UN ASTEROIDE POR BALA
+    bool isDestroying = false;
 
     public void Awake()
     {
@@ -52,10 +54,15 @@ public class Asteroid : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (isDestroying)
+        {
+            return;
+        }
 
         if (collision.CompareTag("Bullet"))
         {
+
+            isDestroying = true;
             ScoreManager.instance.AddPoint();
 
             Destroy(gameObject);

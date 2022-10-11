@@ -8,6 +8,7 @@ public class SceneSwitch : MonoBehaviour
     public static SceneSwitch instance;
     public void PlayGame()
     {
+
         SceneManager.LoadScene(1);
 
     }
@@ -20,5 +21,6 @@ public class SceneSwitch : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        
     }
 }
