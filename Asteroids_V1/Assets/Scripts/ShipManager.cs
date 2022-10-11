@@ -20,7 +20,7 @@ public class ShipManager : MonoBehaviour
     //ESTAMOS PULSANDO LA BARRA ESPACIADORA
     public static bool Fire
     {
-        get { return Input.GetKey(KeyCode.Space); }
+        get { return Input.GetKey(KeyCode.Mouse0); }
     }
 
  }

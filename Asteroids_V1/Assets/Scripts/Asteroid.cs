@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Asteroid : MonoBehaviour
 {
-    public TMP_Text score;
+    public static Asteroid Instance;
 
     public int points = 0;
 
@@ -14,7 +13,13 @@ public class Asteroid : MonoBehaviour
 
     public float speed;
 
-    void Start()
+    //LISTA PARA LOS RESTOS DE ASTEROIDES
+    public GameObject[] subAsteroids;
+
+    public int HowManyAsteroids;
+
+    public bool isDestroying = false;
+    public void Start()
     {
         //Referenciamos la variable con el RigidBody del GameObject
 
@@ -39,25 +44,39 @@ public class Asteroid : MonoBehaviour
         body.angularVelocity = Random.Range(-50f, 50f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDestroying)
+        {
+            return;
+        }
+
+
         if (collision.CompareTag("Bullet"))
         {
-            Score();
+            GameManager.sharedInstance.HowManyPoints();
             Destroy(gameObject);
             Destroy(collision.gameObject);
-            score.text = points.ToString();
+
+        //SE EVALUA SI NO HAY ASTEROIDES EN PANTALLA
+            for(var i = 0; i < HowManyAsteroids; i++)
+            {
+                //SE INSTACIAN LOS ASTEROIDES CORRESPONDIENTES
+                Instantiate
+                
+                    (
+
+                    //SE ELIGE UN ASTEROIDE AL AZAR
+                    subAsteroids[Random.Range(0,subAsteroids.Length)],
+                    transform.position,
+                    Quaternion.identity
+
+                    );
+
+            }
+            
         }
     }
 
-    public void Score()
-    {
-        points++;
-    }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Ship : MonoBehaviour
 {
     //SINGLETON
-
+    public static Ship Instance;
 
     private Rigidbody2D shipBody;
 
@@ -37,7 +37,12 @@ public class Ship : MonoBehaviour
 
     private float ShootTime = 0.35f;
 
-    void Start()
+    public void Awake()
+    {
+        Instance = this;
+    }
+
+    public void Start()
     {
         //LE INDICAMOS QUE SELECCIONA EL RIGIDBODY DEL GAMEOBJECT
         shipBody = GetComponent<Rigidbody2D>();
