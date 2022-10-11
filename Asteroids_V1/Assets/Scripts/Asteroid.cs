@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
+
 
 public class Asteroid : MonoBehaviour
 {
@@ -79,8 +80,12 @@ public class Asteroid : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
+            
             ScoreManager.instance.scorePoints = 0;
             ScoreManager.instance.score.text = ScoreManager.instance.scorePoints.ToString();
+
+            SceneManager.LoadScene(2);
+;           
             var asteroids = FindObjectsOfType<Asteroid>();
             for (var i = 0; i < asteroids.Length; i++)
             {

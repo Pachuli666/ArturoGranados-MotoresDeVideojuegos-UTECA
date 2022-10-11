@@ -136,8 +136,7 @@ public class Ship : MonoBehaviour
     }
 
     public void Lose()
-    {
-        ScoreManager.instance.Awake();
+    { 
         shipBody.velocity = Vector3.zero;
         transform.position = Vector3.zero;
     }
