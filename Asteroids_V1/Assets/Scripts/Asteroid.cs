@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Asteroid : MonoBehaviour
 {
     public static Asteroid Instance;
-
-    public int points = 0;
 
     private Rigidbody2D body;
 
@@ -16,9 +15,15 @@ public class Asteroid : MonoBehaviour
     //LISTA PARA LOS RESTOS DE ASTEROIDES
     public GameObject[] subAsteroids;
 
+    //ESTA VARIABLE CONTROLA CUANTOS ASTEROIDES SE GENERARAN
     public int HowManyAsteroids;
 
-    public bool isDestroying = false;
+
+    public void Awake()
+    {
+        Instance = this;
+    }
+
     public void Start()
     {
         //Referenciamos la variable con el RigidBody del GameObject
@@ -44,18 +49,14 @@ public class Asteroid : MonoBehaviour
         body.angularVelocity = Random.Range(-50f, 50f);
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isDestroying)
-        {
-            return;
-        }
-
+        
 
         if (collision.CompareTag("Bullet"))
         {
-            GameManager.sharedInstance.HowManyPoints();
+            ScoreManager.instance.AddPoint();
+
             Destroy(gameObject);
             Destroy(collision.gameObject);
 
@@ -64,19 +65,32 @@ public class Asteroid : MonoBehaviour
             {
                 //SE INSTACIAN LOS ASTEROIDES CORRESPONDIENTES
                 Instantiate
-                
                     (
-
                     //SE ELIGE UN ASTEROIDE AL AZAR
-                    subAsteroids[Random.Range(0,subAsteroids.Length)],
+                    subAsteroids[Random.Range(0, subAsteroids.Length)],
                     transform.position,
                     Quaternion.identity
-
                     );
-
             }
-            
+
+
+
         }
+
+        if (collision.CompareTag("Player"))
+        {
+            ScoreManager.instance.scorePoints = 0;
+            ScoreManager.instance.score.text = ScoreManager.instance.scorePoints.ToString();
+            var asteroids = FindObjectsOfType<Asteroid>();
+            for (var i = 0; i < asteroids.Length; i++)
+            {
+                Destroy(asteroids[i].gameObject);
+            }
+            ScoreManager.instance.scorePoints = 0;
+            collision.GetComponent<Ship>().Lose();
+        }
+
+
     }
 
 }

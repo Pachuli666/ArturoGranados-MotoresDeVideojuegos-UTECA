@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipManager : MonoBehaviour
+public class ControlManager : MonoBehaviour
 {
     
     //ESTAMOS PULSANDO EL EJE VERTICAL
@@ -20,7 +20,7 @@ public class ShipManager : MonoBehaviour
     //ESTAMOS PULSANDO LA BARRA ESPACIADORA
     public static bool Fire
     {
-        get { return Input.GetKey(KeyCode.Mouse0); }
+        get { return Input.GetKey(KeyCode.Space); }
     }
 
  }

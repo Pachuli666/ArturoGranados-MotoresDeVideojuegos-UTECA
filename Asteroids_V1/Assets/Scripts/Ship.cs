@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class Ship : MonoBehaviour
@@ -14,7 +16,7 @@ public class Ship : MonoBehaviour
 
     private float horizontal;
 
-    private bool shooting;
+    private bool shooting = false;
 
     public float speed;
 
@@ -33,9 +35,11 @@ public class Ship : MonoBehaviour
 
     public GameObject bulletPrefab;
 
-    public bool CanShoot = false;
+    public bool CanShoot;
 
     private float ShootTime = 0.35f;
+
+
 
     public void Awake()
     {
@@ -52,21 +56,20 @@ public class Ship : MonoBehaviour
         // EN OTRAS PALABRAS LE ASIGNARA UN VELOCIDAD CONSTANTE
         shipBody.drag = brake;
 
-        //NO QUIERO QUE LA BALA SE VEA AL INICIO DEL JUEGO
-        bulletPrefab.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //EMPARENTAMOS LAS VARIABLES CON EL CONTROLADOR DE LA NAVE
+        //ESTAS VARIABLES MODIFICARAN LOS CONTROLES DE MOVIMINETO Y DISPARO
 
-        vertical = ShipManager.Vertical;
-        horizontal = ShipManager.Horizontal;
-        shooting = ShipManager.Fire;
+        vertical = ControlManager.Vertical;
+        horizontal = ControlManager.Horizontal;
+        shooting = ControlManager.Fire;
 
         Rotate();
         Shoot();
+
     }
 
     //FIXED UPDATE NOS PERMITE DESPLAZAR UN OBJETO EN UN INTERVALO FIJO
@@ -107,14 +110,10 @@ public class Ship : MonoBehaviour
     {
         if (shooting && CanShoot)
         {
-            bulletPrefab.GetComponent<SpriteRenderer>().enabled = true;
-
             StartCoroutine(FireRate());
-            {
-
-            }
-
+            { }
         }
+
     }
     
     private IEnumerator FireRate()
@@ -134,5 +133,12 @@ public class Ship : MonoBehaviour
 
         CanShoot = true;
 
+    }
+
+    public void Lose()
+    {
+        ScoreManager.instance.Awake();
+        shipBody.velocity = Vector3.zero;
+        transform.position = Vector3.zero;
     }
 }

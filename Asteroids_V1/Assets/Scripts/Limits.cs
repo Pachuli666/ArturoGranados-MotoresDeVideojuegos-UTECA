@@ -19,7 +19,7 @@ using UnityEngine;
     public class Limits : MonoBehaviour
 {
 
-    public Borders borders;
+    public Borders border;
 
     void Update()
     {
@@ -32,27 +32,27 @@ using UnityEngine;
         //La posicion de la nave se comparara con los limites establecidos.
         //Si el jugador supera los limites es transportado al lado opuesto de la pantalla.
 
-        if( ship_x > borders.RightBorder)
+        if( ship_x > border.RightBorder)
         {
-            pos.x = borders.LeftBorder;
+            pos.x = border.LeftBorder;
             transform.position = pos;
         }
 
-        if (ship_x < borders.LeftBorder)
+        if (ship_x < border.LeftBorder)
         {
-            pos.x = borders.RightBorder;
+            pos.x = border.RightBorder;
             transform.position = pos;
         }
 
-        if ( ship_y > borders.TopBorder)
+        if ( ship_y > border.TopBorder)
         {
-            pos.y = borders.BottomBorder;
+            pos.y = border.BottomBorder;
             transform.position = pos;
         }
 
-        if (ship_y < borders.BottomBorder)
+        if (ship_y < border.BottomBorder)
         {
-            pos.y = borders.TopBorder;
+            pos.y = border.TopBorder;
             transform.position = pos;
         }
 
