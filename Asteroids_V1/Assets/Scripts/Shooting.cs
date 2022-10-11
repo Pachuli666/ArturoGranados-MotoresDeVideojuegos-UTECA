@@ -8,10 +8,7 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        if(Ship.door.CanShoot == true)
-        {
             //EL MOVIMIENTO SE ORIENTA HACIA ADELANTA Y SE MULTIPLICA POR LA VELOCIDAD Y EL TIEMPO
             transform.position += transform.up * speed * Time.deltaTime;
-        }
     }
 }

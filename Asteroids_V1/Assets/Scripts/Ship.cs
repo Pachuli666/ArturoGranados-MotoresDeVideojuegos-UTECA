@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ship : MonoBehaviour
 {
     //SINGLETON
-    public static Ship door;
+
 
     private Rigidbody2D shipBody;
 
@@ -36,16 +37,6 @@ public class Ship : MonoBehaviour
 
     private float ShootTime = 0.35f;
 
-    private void Awake()
-    {
-        if(door != null)
-        {
-            return;
-        }
-
-        door = this;
-    }
-
     void Start()
     {
         //LE INDICAMOS QUE SELECCIONA EL RIGIDBODY DEL GAMEOBJECT
@@ -55,6 +46,9 @@ public class Ship : MonoBehaviour
         //AL ASIGNARLE UN VALOR A LA VARIABLE QUE LO MODIFICARA
         // EN OTRAS PALABRAS LE ASIGNARA UN VELOCIDAD CONSTANTE
         shipBody.drag = brake;
+
+        //NO QUIERO QUE LA BALA SE VEA AL INICIO DEL JUEGO
+        bulletPrefab.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -108,6 +102,8 @@ public class Ship : MonoBehaviour
     {
         if (shooting && CanShoot)
         {
+            bulletPrefab.GetComponent<SpriteRenderer>().enabled = true;
+
             StartCoroutine(FireRate());
             {
 
